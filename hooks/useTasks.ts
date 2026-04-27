@@ -117,7 +117,7 @@ export function useTasks(): UseTasksReturn {
     try{
 
       // PATCH request para alternar status
-    const response = await fetch(`${API_URL}/${id}`, {method: "PATCH"});
+    const response = await fetch(`${API_URL}/${id}/toggle`, {method: "PATCH"});
 
     if(!response.ok){throw new Error("Erro ao atualizar tarefa")};
     await fetchTasks();
@@ -132,7 +132,7 @@ export function useTasks(): UseTasksReturn {
   //Remove uma tarefa
   async function deleteTask(id: number): Promise<void> {
     try{
-      const response = await fetch(`${API_URL}/${id}/toggle`, {method: "DELETE"});
+      const response = await fetch(`${API_URL}/${id}`, {method: "DELETE"});
       if(!response.ok){throw new Error("Erro ao remover tarefa")};
       await fetchTasks();
     
@@ -144,8 +144,9 @@ export function useTasks(): UseTasksReturn {
   
   useEffect(() => {
     fetchTasks(); // Executa apenas uma vez na montagem
-  }, []);
+  }, []);//Array vazio = executa so na montagem
 
+  //Retorna estados e funções para os componentes
   return{
     tasks,
     loading,
